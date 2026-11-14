@@ -42,6 +42,7 @@ class User(Base):
     user_id = Column(Integer, primary_key=True)
     user_name = Column(String)
     password = Column(String)
+    
 
 Base.metadata.create_all(engine)
 
@@ -72,6 +73,7 @@ def verify_login(username, password):
     access_token = create_token(username=username, token_type = "access")
     refresh_token = create_token(username=username, token_type = "refresh")
     return{"access_token": access_token, "refresh_token": refresh_token}
+
 
 def create_token(username, token_type):
     time = ACCESS_TOKEN_EXPIRY
@@ -106,6 +108,15 @@ def register_user(user_name:str, password:str):
     session.close()
     return True
 
+def register_user(user_name, password):
+    with Session(engine) as session:
+        if session.query(User).filter_by(user_name=user_name).first():
+            return False
+        hashed_password = ph.hash(password)
+        session.add(User(user_name=user_name, password=hashed_password))
+        session.commit()
+        return True
+
 # E1
 def add_package(package_name, destination, weight, arrival_date):
     session = Session(engine)
@@ -122,7 +133,7 @@ def add_package(package_name, destination, weight, arrival_date):
     response = package_details(package)
     session.close()
     return response
-
+    
 # E2
 def get_package(package_id):
     session = Session(engine)
