@@ -15,7 +15,7 @@ app.add_middleware(
 class packageDetails(BaseModel):
     package_name: str
     destination: str
-    weight: float = 
+    weight: float 
     arrival_date: str
 
 class packageUpdate(BaseModel):
