@@ -28,10 +28,7 @@ class DispatchBatchDetails(BaseModel):
     destination: str
     vehicle: str
     package_ids: list[int]
-    dispatch_status: str = "pending"   
-
-class DispatchStatusDetails(BaseModel):
-    dispatch_status: str     
+    dispatch_status: str = "pending"     
 
            
 
