@@ -1,5 +1,4 @@
 from fastapi.middleware.cors import CORSMiddleware
-
 from fastapi import FastAPI, HTTPException, Header, Body
 from pydantic import BaseModel, Field
 import functions
@@ -13,17 +12,17 @@ app.add_middleware(
 )
 
 
-class packagedetails(BaseModel):
+class packageDetails(BaseModel):
     package_name: str
     destination: str
-    weight: float = Field(gt=0)
+    weight: float = 
     arrival_date: str
 
-class packageupdate(BaseModel):
-    package_name: str 
-    destination: str 
-    weight: float 
-    arrival_date: str    
+class packageUpdate(BaseModel):
+    package_name: str = None
+    destination: str = None
+    weight: float = None
+    arrival_date: date = None  
 
 class DispatchBatchDetails(BaseModel):
     destination: str
@@ -33,6 +32,11 @@ class DispatchBatchDetails(BaseModel):
 
 class DispatchStatusDetails(BaseModel):
     dispatch_status: str     
+
+# class UserRegister(BaseModel):
+#     username: str
+#     password: str
+#     role: str            
 
 @app.post("/login")
 def login(username = Body(), password = Body()):
@@ -65,6 +69,7 @@ def register_package(package: packagedetails, token=Header(None)):
         package.destination,
         package.weight,
         package.arrival_date)
+
 
 # E2 
 @app.get("/packages/{package_id}")
