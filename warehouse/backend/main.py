@@ -55,11 +55,12 @@ def register_user(user_name = Body(), password = Body()):
 
 # E1 
 @app.post("/packages")
-def register_package(package: packagedetails, token=Header(None)):
+def register_package(package: packageDetails, token=Header(None)):
     username = functions.verify_token(token=token, token_type="access")
     if not username:
         raise HTTPException(status_code=401, detail="Invalid or expiry token")
-    return functions.add_package( package.package_name,
+    return functions.add_package( 
+        package.package_name,
         package.destination,
         package.weight,
         package.arrival_date)
@@ -78,7 +79,7 @@ def get_package(package_id: int, token = Header(None)):
 
 # E3 
 @app.patch("/packages/{package_id}")
-def update_package(package: packageupdate, package_id: int, token = Header(None)):
+def update_package(package: packageUpdate, package_id: int, token = Header(None)):
     username = functions.verify_token(token=token, token_type = "access")
     if not username:
         raise HTTPException(status_code = 401, detail = "Invalid or expiry token")
