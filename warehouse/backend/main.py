@@ -33,10 +33,7 @@ class DispatchBatchDetails(BaseModel):
 class DispatchStatusDetails(BaseModel):
     dispatch_status: str     
 
-# class UserRegister(BaseModel):
-#     username: str
-#     password: str
-#     role: str            
+           
 
 @app.post("/login")
 def login(username = Body(), password = Body()):
